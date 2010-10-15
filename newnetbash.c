@@ -11,7 +11,7 @@ static void print_usage_exit()
 {
   printf("Usage: newnetbash [-s|shared|-n|new]\n");
   printf("       -s|shared   launch bash in the same network namespace\n");
-  printf("       -n|new      launch bash in the same network namespace\n");
+  printf("       -n|newnet   launch bash in a new network namespace\n");
   exit(1);
 }
 
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
   
   if ((strcmp(argv[1], "shared") == 0) || (strcmp(argv[1], "-s") == 0))
     create_new_net = 0;
-  else if ((strcmp(argv[1], "new") == 0) || (strcmp(argv[1], "-n") == 0))
+  else if ((strcmp(argv[1], "newnet") == 0) || (strcmp(argv[1], "-n") == 0))
     create_new_net = 1;
   else
     print_usage_exit();
