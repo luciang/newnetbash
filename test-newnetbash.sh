@@ -8,6 +8,10 @@ FREEMEM_SAMPLES=10
 # interval between two samples of free system memory.
 FREEMEM_SAMPLING_INTERVAL=1
 
+NEWNETBASH=`which newnetbash`
+if [ 'x$?' == 'x1' ]; then
+    NEWNETBASH=./newnetbash
+fi
 
 run_shells () {
     local freemem_filename=freemem_proc_$1_$2
@@ -16,7 +20,7 @@ run_shells () {
     # run shells
     echo Running $1 clients in $2 mode
     for ((i=0;i<$1;i++)); do
-	echo "sleep 100" | sudo ./newnetbash $2 &> /dev/null & true  ;
+	echo "sleep 100" | sudo $NEWNETBASH $2 &> /dev/null & true  ;
     done
 
 
@@ -31,7 +35,7 @@ run_shells () {
 
     
     # kill shells
-    killall -9 sleep
+    killall -9 sleep || true
 }
 
 
@@ -55,8 +59,8 @@ compute_avg () {
 }
 
 
-if [ ! -f ./newnetbash ]; then
-    echo $0: Error: no ./newnetbash file found! Aborting tests!
+if [ ! -f $NEWNETBASH ]; then
+    echo $0: Error: no $NEWNETBASH file found! Aborting tests!
     exit 1
 fi
 
